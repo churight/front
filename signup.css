@@ -1,0 +1,48 @@
+.signup-form {
+    margin-top: 20px;
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"],
+.signup-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.signup-form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.signup-form button {
+    background-color: #aec4f9;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.signup-form button:hover {
+    background-color: #995d60;
+}
+
+.signup-form input[type="checkbox"],
+.signup-form input[type="radio"] {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}

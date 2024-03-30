@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title> 
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+<header>
+</header>
+
+<div class="signup-form">
+    <h2>Sign Up</h2>
+    <form action="/submit" method="post">
+        <input type="text" name="name" placeholder="Ім'я"><br>
+        <input type="email" name="email" placeholder="Електронна пошта"><br>
+        <input type="password" name="password" placeholder="Пароль"><br>
+        <textarea name="message" placeholder="Повідомлення"></textarea><br>
+        <input type="checkbox" name="agree" value="1"> Погоджуюсь з умовами<br>
+        <input type="radio" name="gender" value="male"> Чоловіча<br>
+        <input type="radio" name="gender" value="female"> Жіноча<br>
+        <select name="country">
+            <option value="ukraine">Україна</option>
+            <option value="poland">Польща</option>
+            <option value="usa">США</option>
+        </select><br>
+        <button type="submit">Відправити</button>
+    </form>
+</div>
+
+</body>
+</html>
