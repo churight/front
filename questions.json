@@ -1,0 +1,31 @@
+
+{
+    "questions": [
+      {
+        "question": "Who is called sunfish ?",
+        "options": ["Kim Dokja", "Yoo Junheuk", "Klein Morreti", "Cale"],
+        "correctAnswer": "Yoo Junheuk"
+      },
+      {
+        "question": "What novel is a pricvel to orv?",
+        "options": ["The World After the End", "The Birth of a Hero", "Three Ways to Survive in Ruined World"],
+        "correctAnswer": "The World After the End"
+      },
+      {
+        "question": "Who is called a squid?",
+        "options": ["Kim Dokja", "Yoo Junheuk", "Klein Morreti", "Cale"],
+        "correctAnswer": "Kim Dokja"
+      },
+      {
+        "question": "Who wrote 'Three Ways to Survive in Ruined World'?",
+        "options": ["The Oldest Dream", "Han Sooyung 1864", "Han Sooyung 1863", "Dunno"],
+        "correctAnswer": "Han Sooyung 1863"
+      },
+      {
+        "question": "What happened to 49%?",
+        "options": ["Died", "Erased", "Welcome to 41st turn"],
+        "correctAnswer": "Welcome to 41st turn"
+      }
+    ]
+  }
+  
