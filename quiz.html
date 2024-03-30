@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Опитування</title>
+</head>
+<body>
+
+<form id="surveyForm">
+    <div>
+        <label for="q0">What is your name?</label><br>
+        <input type="text" id="q0" name="q0"><br>
+    </div>
+    <div>
+        <label for="q1">What is your favorite novel?</label><br>
+        <input type="text" id="q1" name="q1"><br>
+    </div>
+    <div>
+        <label for="q2">How many novels have you read?</label><br>
+        <input type="number" id="q2" name="q2" min="0" step="1"><br>
+    </div>
+    <div>
+        <label for="q3">Do you want to try new genres?</label><br>
+        <input type="radio" id="q3_yes" name="q3" value="yes">
+        <label for="q3_yes">Yes</label>
+        <input type="radio" id="q3_no" name="q3" value="no">
+        <label for="q3_no">No</label><br>
+    </div>
+    <div>
+        <label for="q4">Choose your favorite genres:</label><br>
+        <select id="q4" name="q4">
+            <option value="romance">Romance</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="supernatural">Supernatural</option>
+            <option value="modern">Modern</option>
+            <option value="action">Action</option>
+            <option value="mystery">Mystery</option>
+            <option value="horror">Horror</option>
+            <option value="drama">Drama</option>
+            <option value="psychological">Psychological</option>
+            <option value="comedy">Comedy</option>
+            <option value="arventure">Adventure</option>
+        </select><br>
+    </div>
+    <div>
+        <label for="q5">What is your last read novel?</label><br>
+        <textarea id="q5" name="q5"></textarea><br>
+    </div>
+    <div>
+        <label for="q6">How will you rate this novel?</label><br>
+        <input type="range" id="q6" name="q6" min="0" max="10"><br>
+    </div>
+    <div>
+        <label for="q7">How long are your reading sessions?</label><br>
+        <input type="time" id="q7" name="q7"><br>
+    </div>
+    <div>
+        <label for="q8">What is your gender:</label><br>
+        <input type="checkbox" id="q8_male" name="q8" value="male">
+        <label for="q8_male">Male</label>
+        <input type="checkbox" id="q8_female" name="q8" value="female">
+        <label for="q7_female">Female</label><br>
+    </div>
+    <div>
+        <label for="q9">How old are you?</label><br>
+        <input type="number" id="q9" name="q9" min="1" step="1"><br>
+    </div>
+    <div>
+        <label for="q10">Rate our website on a scale from 1 to 10</label><br>
+        <input type="range" id="q10" name="q10" min="0" max="10"><br>
+    </div>
+    <button type="submit">Send</button>
+</form>
+
+<form id="ageFilterForm">
+    <label for="age">Оберіть вікову категорію:</label>
+    <select id="age" name="age">
+      <option value="under18">Молодше 18</option>
+      <option value="18to30">Від 18 до 30</option>
+      <option value="31to50">Від 31 до 50</option>
+      <option value="over50">Старше 50</option>
+    </select>
+    <button type="submit">Фільтрувати</button>
+  </form>
+
+  <form id="genderFilterForm">
+    <label for="gender">Оберіть стать:</label><br>
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="male">Чоловік</label><br>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">Жінка</label><br>
+    <button type="submit">Фільтрувати за статтю</button>
+</form>
+
+<form id="novelFilterForm">
+    <label for="favoriteNovel">Оберіть улюблену новелу:</label><br>
+    <input type="text" id="favoriteNovel" name="favoriteNovel"><br>
+    <button type="submit">Фільтрувати за улюбленою новелою</button>
+</form>
+
+
+<div id="filteredResults">
+    <!-- Тут буде відображатися результат фільтрації -->
+</div>
+
+<script>
+    document.getElementById('surveyForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const surveyData = {};
+      for (const [key, value] of formData.entries()) {
+        surveyData[key] = value;
+      }
+      const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+      surveys.push(surveyData);
+      localStorage.setItem('surveys', JSON.stringify(surveys));
+      alert('Ваші дані було успішно збережено!');
+      event.target.reset();
+    });
+
+    // Обробник події для форми фільтрації віку
+    document.getElementById('ageFilterForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const ageFilter = document.getElementById('age').value;
+      filterAndDisplayResults(ageFilter, null, null);
+    });
+
+    // Обробник події для форми фільтрації статі
+    document.getElementById('genderFilterForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const genderFilter = document.querySelector('input[name="gender"]:checked');
+      if (genderFilter) {
+        filterAndDisplayResults(null, genderFilter.value, null);
+      } else {
+        alert("Будь ласка, виберіть стать");
+      }
+    });
+
+    // Обробник події для форми фільтрації улюбленої новелі
+    document.getElementById('novelFilterForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const favoriteNovelFilter = document.getElementById('favoriteNovel').value;
+      filterAndDisplayResults(null, null, favoriteNovelFilter);
+    });
+
+    // Функція для фільтрації результатів і відображення їх
+    function filterAndDisplayResults(ageFilter, genderFilter, favoriteNovelFilter) {
+      const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
+      const filteredSurveys = surveys.filter(function(survey) {
+        // Логіка фільтрації за віком
+        if (ageFilter) {
+          switch (ageFilter) {
+            case 'under18':
+              return parseInt(survey.q9) < 18;
+            case '18to30':
+              return parseInt(survey.q9) >= 18 && parseInt(survey.q9) <= 30;
+            case '31to50':
+              return parseInt(survey.q9) >= 31 && parseInt(survey.q9) <= 50;
+            case 'over50':
+              return parseInt(survey.q9) > 50;
+            default:
+              return true; // якщо вибрано не визначену категорію, показати все
+          }
+        }
+        // Логіка фільтрації за статтю
+        if (genderFilter) {
+          return survey.q8 === genderFilter;
+        }
+        // Логіка фільтрації за улюбленою новелою
+        if (favoriteNovelFilter) {
+          return survey.q1.toLowerCase().includes(favoriteNovelFilter.toLowerCase());
+        }
+        // Якщо не встановлено жодного фільтра, повернути true
+        return true;
+      });
+      displayFilteredResults(filteredSurveys);
+    }
+
+
+    // Функція для відображення результатів фільтрації
+    function displayFilteredResults(surveys) {
+      const filteredResultsDiv = document.getElementById('filteredResults');
+      filteredResultsDiv.innerHTML = ''; // очищення попередніх результатів
+      surveys.forEach(function(survey) {
+        const surveyDiv = document.createElement('div');
+        surveyDiv.textContent = `Ім'я: ${survey.q0}, Вік: ${survey.q9}`;
+        filteredResultsDiv.appendChild(surveyDiv);
+      });
+    }
+    </script>
+    
+
+</body>
+</html>
